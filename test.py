@@ -13,7 +13,7 @@ df =pd.read_csv('XXH2017_YRBS_Data.dat')
 df2 =pd.read_csv('yrbs2015.dat')
 # df.info()
 ##q2: ,q66 ,q67 ,q32 ,q42
-print('updated')
+
 
 s=[]
 a=[]
@@ -68,9 +68,11 @@ bdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 gdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 sdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 qdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
+ldl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 bd=[]
 gd=[]
 sd=[]
+ld=[]
 qd=[]
 factors=[]
 st=[]
@@ -79,12 +81,18 @@ for i in range(len(s)):
         st.append(1)
     else:
         st.append(0)
-    if s[i]==2:
+    if s[i]==2 and g[i]==2:
         gdl[a[i]]+=(1)
         if a[i]>1:
             gd.append(1)
         else:
             gd.append(0)
+    elif s[i]==2 and g[i]==1:
+        ldl[a[i]]+=(1)
+        if a[i]>1:
+            ld.append(1)
+        else:
+            ld.append(0)
     elif s[i]==1:
         sdl[a[i]]+=(1)
         if a[i]>1:
@@ -103,17 +111,23 @@ for i in range(len(s)):
             qd.append(1)
         else:
             qd.append(0)
-    factors.append([g[i],s[i],ag[i]])
-gavg=0
-savg=0
-bavg=0
-for i in range(2, len(sdl)):
-    savg+=sdl[i]
-    gavg+=gdl[i]
-    bavg+=bdl[i]
-gavg=np.mean(gavg)
-savg=np.mean(savg)
-bavg=np.mean(bavg)
+    factors.append([s[i],ag[i],g[i]])
+
+def get_perc(d):
+    sm=0
+    perc=[]
+    for i in d.keys():
+        sm+=d[i]
+    for i in d.keys():
+        temp=(d[i]/sm)*100
+        perc.append(round(temp,1))
+    return perc
+pg=get_perc(gdl)
+ps=get_perc(sdl)
+pl=get_perc(ldl)
+pb=get_perc(bdl)
+pq=get_perc(qdl)
+
 
 X=np.asarray(factors)
 y=np.asarray(st)
@@ -123,12 +137,14 @@ model.fit(X_train,y_train)
 pred=model.predict(X_test)
 acc=accuracy_score(y_test, pred)
 print(acc)
+# plt.plot(y_test, pred)
 # rmse=np.sqrt(mean_squared_error(y_test, pred))
 # print(rmse)
 # probs = model.predict_proba(X_test)
 # preds = probs[:,1]
 # fpr, tpr, threshold =roc_curve(y_test, preds)
 # roc_score=round(roc_auc_score(y_test,preds),2)
+
 # meanline=np.arange(0,1.1,.1)
 # plt.plot(meanline,meanline, color='black')
 # plt.plot(fpr,tpr, label=f'Area under Curve: {roc_score}')
@@ -137,21 +153,23 @@ print(acc)
 # plt.ylabel('True Positive')
 # plt.savefig('ROC.png')
 # plt.legend()
+# # plt.show()
+# alclab=['0 days',' 1-2 days','3-5 days','6-9 days','10-19 days','20-29 days','30 days']
+# fig=plt.figure(figsize=(8,8))
+# ax1=fig.add_subplot(2,2,1)
+# ax2=fig.add_subplot(2,2,2)
+# ax3=fig.add_subplot(2,2,3)
+# ax4=fig.add_subplot(2,2,4)
+#
+# ax1.pie(bdl.values(),labels=pb)
+# ax1.set_title('Bi drinking rates')
+# ax2.pie(sdl.values(),labels=ps)
+# ax2.set_title('Straight drinking rates')
+# ax3.pie(gdl.values(),labels=pg)
+# ax3.set_title('Gay drinking rates')
+# ax4.pie(ldl.values(),labels=pl)
+# ax4.set_title('Lesbian drinking rates')
+# plt.savefig('drinking.png')
 # plt.show()
-fig=plt.figure(figsize=(8,8))
-ax1=fig.add_subplot(2,2,1)
-ax2=fig.add_subplot(2,2,2)
-ax3=fig.add_subplot(2,2,3)
-
-
-
-ax1.pie(bdl.values(),labels=None)
-ax1.set_title('Bi drinking rates')
-ax2.pie(sdl.values(),labels=None)
-ax2.set_title('Straight drinking rates')
-ax3.pie(gdl.values(),labels=None)
-ax3.set_title('Gay/Lesbian drinking rates')
-plt.savefig('drinking.png')
-plt.show()
 # gsdr=sum(gsd)/(len(gsd)-sum(gsd))
 # ssdr=sum(ssd)/(len(ssd)-sum(ssd))
