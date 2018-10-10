@@ -13,6 +13,8 @@ df =pd.read_csv('XXH2017_YRBS_Data.dat')
 df2 =pd.read_csv('yrbs2015.dat')
 # df.info()
 ##q2: ,q66 ,q67 ,q32 ,q42
+print('updated')
+
 s=[]
 a=[]
 c=[]
@@ -136,20 +138,20 @@ print(acc)
 # plt.savefig('ROC.png')
 # plt.legend()
 # plt.show()
-# fig=plt.figure(figsize=(8,8))
-# ax1=fig.add_subplot(2,2,1)
-# ax2=fig.add_subplot(2,2,2)
-# ax3=fig.add_subplot(2,2,3)
-#
-#
-#
-# ax1.pie(bdl.values(),labels=bdl.keys())
-# ax1.set_title('Bi drinking rates')
-# ax2.pie(sdl.values(),labels=sdl.keys())
-# ax2.set_title('Straight drinking rates')
-# ax3.pie(gdl.values(),labels=gdl.keys())
-# ax3.set_title('Gay/Lesbian drinking rates')
-# plt.savefig('drinking.png')
-# plt.show()
+fig=plt.figure(figsize=(8,8))
+ax1=fig.add_subplot(2,2,1)
+ax2=fig.add_subplot(2,2,2)
+ax3=fig.add_subplot(2,2,3)
+
+
+
+ax1.pie(bdl.values(),labels=None)
+ax1.set_title('Bi drinking rates')
+ax2.pie(sdl.values(),labels=None)
+ax2.set_title('Straight drinking rates')
+ax3.pie(gdl.values(),labels=None)
+ax3.set_title('Gay/Lesbian drinking rates')
+plt.savefig('drinking.png')
+plt.show()
 # gsdr=sum(gsd)/(len(gsd)-sum(gsd))
 # ssdr=sum(ssd)/(len(ssd)-sum(ssd))
