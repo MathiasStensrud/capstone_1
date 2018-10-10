@@ -9,4 +9,4 @@
 #### EDA
   My initial EDA was promising, with close to half of LGBT students having drunk alcohol in the past 30 days, as compared to only 15% of their straight peers.
 
-  ![](https://github.com/MathiasStensrud/capstone_1/pie.png)
+  ![](https://github.com/MathiasStensrud/capstone_1/blob/master/drinking.png)
