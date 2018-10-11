@@ -11,6 +11,7 @@ My data was pulled from the CDC YRBS, a survey given to middle- and high-schools
  I was forced to remove about ~4,000 rows of my data due to missing answers. Imputing this data would not make sense as the answers were categorical and individual to each student, making them risky to change. Once I removed this data I was left with ~13,200 rows of answers that could be used in my analysis.
  
   ![](https://github.com/MathiasStensrud/capstone_1/blob/master/drinking.png)
+  ![](https://github.com/MathiasStensrud/capstone_1/blob/master/questioning.png)
  
  My initial EDA found that close to half of LGBT students surveyed said they had drunk alcohol in the past 30 days, as compared to only 15% of their straight peers.
   The four categories that students identified as were Straight, Bisexual, Gay/Lesbian(which I later separated further), and questioning. All of the groups apart from the straight students had over 40% of their population drinking at least 1-2 times in the previous 30 days, as well as more than 10% of Gay and Bi students drinking 3-5 times in the last 30 days.
