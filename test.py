@@ -14,6 +14,54 @@ df2 =pd.read_csv('yrbs2015.dat')
 # df.info()
 ##q2: ,q66 ,q67 ,q32 ,q42
 
+def get_perc(d):
+    sm=0
+    perc=[]
+    for i in d.keys():
+        sm+=d[i]
+    for i in d.keys():
+        temp=(d[i]/sm)*100
+        perc.append(round(temp,1))
+    return perc
+
+def corrPlot(dat):
+    sns.pairplot(dat)
+    plt.show()
+    pass
+
+def piePlot(vals,labels, leg=None, save=False, titles=None):
+    fig=plt.figure(figsize=(8,8))
+    ax1=fig.add_subplot(2,2,1)
+    ax2=fig.add_subplot(2,2,2)
+    ax3=fig.add_subplot(2,2,3)
+    ax4=fig.add_subplot(2,2,4)
+    axes=[ax1,ax2,ax3,ax4]
+    for i in range(len(vals)):
+        axes[i].set_title(f'{titles[i]}')
+        axes[i].pie(vals[i],labels=labels[i])
+    if leg:
+        plt.legend(leg, loc=1)
+    if save:
+        plt.savefig(f'{title}.png')
+    plt.show()
+    pass
+
+def plot_roc(test_fact, true):
+    probs = model.predict_proba(test_fact)
+    preds = probs[:,1]
+    fpr, tpr, thresholesbian_drinking_rate =roc_curve(true, preds)
+    roc_score=round(roc_auc_score(true,preds),3)
+
+    meanline=np.arange(0,1.1,.1)
+    plt.plot(meanline,meanline, color='black')
+    plt.plot(fpr,tpr, label=f'Area under Curve: {roc_score}')
+    plt.title('ROC Curve')
+    plt.xlabel('False Positive')
+    plt.ylabel('True Positive')
+    plt.savefig('ROC.png')
+    plt.legend()
+    plt.show()
+    pass
 
 s=[]
 a=[]
@@ -44,132 +92,75 @@ for i in range(len(df2['Students'])):
         else:
             w.append(int(wC))
 
-corrTest=pd.DataFrame({'Sexuality':s,'Alcohol Usage':a,'Smoking':c, 'Age':ag, 'Gender': g, 'Wildcard':w})
-# print(corrTest.corr())
-# sns.pairplot(corrTest)
-# plt.show()
-# gS=[]
-# gA=[]
-# sS=[]
-# sA=[]
+corrTest=pd.DataFrame({'Sexuality':s,'Alcohol Usage':a,'Smoking':c, 'Age':ag, 'Gender': g, 'Wilesbian_drinking_ratecard':w})
 
-# for i in range(len(s)):
-#     if s[i]>1 and s[i]<4:
-#         if a[i]>1:
-#             gA.append(1)
-#         else:
-#             gA.append(0)
-#     else:
-#         if a[i]>1:
-#             sA.append(1)
-#         else:
-#             sA.append(0)
-bdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
-gdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
-sdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
-qdl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
-ldl={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
-bd=[]
-gd=[]
-sd=[]
-ld=[]
-qd=[]
+bi_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
+gay_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
+straight_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
+questioning_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
+lesbian_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
+bi_drinking_rate=[]
+gay_drinking_rate=[]
+straight_drinking_rate=[]
+lesbian_drinking_rate=[]
+questioning_drinking_rate=[]
 factors=[]
-st=[]
+y_vals=[]
 for i in range(len(s)):
     if a[i]>1:
-        st.append(1)
+        y_vals.append(1)
     else:
-        st.append(0)
+        y_vals.append(0)
     if s[i]==2 and g[i]==2:
-        gdl[a[i]]+=(1)
+        gay_drinking_dict[a[i]]+=(1)
         if a[i]>1:
-            gd.append(1)
+            gay_drinking_rate.append(1)
         else:
-            gd.append(0)
+            gay_drinking_rate.append(0)
     elif s[i]==2 and g[i]==1:
-        ldl[a[i]]+=(1)
+        lesbian_drinking_dict[a[i]]+=(1)
         if a[i]>1:
-            ld.append(1)
+            lesbian_drinking_rate.append(1)
         else:
-            ld.append(0)
+            lesbian_drinking_rate.append(0)
     elif s[i]==1:
-        sdl[a[i]]+=(1)
+        straight_drinking_dict[a[i]]+=(1)
         if a[i]>1:
-            sd.append(1)
+            straight_drinking_rate.append(1)
         else:
-            sd.append(0)
+            straight_drinking_rate.append(0)
     elif s[i]==3:
-        bdl[a[i]]+=(1)
+        bi_drinking_dict[a[i]]+=(1)
         if a[i]>1:
-            bd.append(1)
+            bi_drinking_rate.append(1)
         else:
-            bd.append(0)
+            bi_drinking_rate.append(0)
     elif s[i]==4:
-        qdl[a[i]]+=(1)
+        questioning_drinking_dict[a[i]]+=(1)
         if a[i]>1:
-            qd.append(1)
+            questioning_drinking_rate.append(1)
         else:
-            qd.append(0)
+            questioning_drinking_rate.append(0)
     factors.append([s[i],ag[i],g[i]])
 
-def get_perc(d):
-    sm=0
-    perc=[]
-    for i in d.keys():
-        sm+=d[i]
-    for i in d.keys():
-        temp=(d[i]/sm)*100
-        perc.append(round(temp,1))
-    return perc
-pg=get_perc(gdl)
-ps=get_perc(sdl)
-pl=get_perc(ldl)
-pb=get_perc(bdl)
-pq=get_perc(qdl)
+
+pg=get_perc(gay_drinking_dict)
+ps=get_perc(straight_drinking_dict)
+pl=get_perc(lesbian_drinking_dict)
+pb=get_perc(bi_drinking_dict)
+pq=get_perc(questioning_drinking_dict)
 
 
 X=np.asarray(factors)
-y=np.asarray(st)
+y=np.asarray(y_vals)
 X_train, X_test, y_train, y_test = train_test_split(X, y)
 model=LogisticRegressionCV(cv=10,class_weight='balanced',random_state=42)
 model.fit(X_train,y_train)
 pred=model.predict(X_test)
 acc=accuracy_score(y_test, pred)
 print(acc)
-# plt.plot(y_test, pred)
-# rmse=np.sqrt(mean_squared_error(y_test, pred))
-# print(rmse)
-# probs = model.predict_proba(X_test)
-# preds = probs[:,1]
-# fpr, tpr, threshold =roc_curve(y_test, preds)
-# roc_score=round(roc_auc_score(y_test,preds),2)
 
-# meanline=np.arange(0,1.1,.1)
-# plt.plot(meanline,meanline, color='black')
-# plt.plot(fpr,tpr, label=f'Area under Curve: {roc_score}')
-# plt.title('ROC Curve')
-# plt.xlabel('False Positive')
-# plt.ylabel('True Positive')
-# plt.savefig('ROC.png')
-# plt.legend()
-# # plt.show()
-# alclab=['0 days',' 1-2 days','3-5 days','6-9 days','10-19 days','20-29 days','30 days']
-# fig=plt.figure(figsize=(8,8))
-# ax1=fig.add_subplot(2,2,1)
-# ax2=fig.add_subplot(2,2,2)
-# ax3=fig.add_subplot(2,2,3)
-# ax4=fig.add_subplot(2,2,4)
-#
-# ax1.pie(bdl.values(),labels=pb)
-# ax1.set_title('Bi drinking rates')
-# ax2.pie(sdl.values(),labels=ps)
-# ax2.set_title('Straight drinking rates')
-# ax3.pie(gdl.values(),labels=pg)
-# ax3.set_title('Gay drinking rates')
-# ax4.pie(ldl.values(),labels=pl)
-# ax4.set_title('Lesbian drinking rates')
-# plt.savefig('drinking.png')
-# plt.show()
-# gsdr=sum(gsd)/(len(gsd)-sum(gsd))
-# ssdr=sum(ssd)/(len(ssd)-sum(ssd))
+alclab=['0 days',' 1-2 days','3-5 days','6-9 days','10-19 days','20-29 days','30 days']
+drink_vals=([bi_drinking_dict.values(),straight_drinking_dict.values(),gay_drinking_dict.values(),
+lesbian_drinking_dict.values()])
+drink_labs=([pb,ps,pg,pl])
