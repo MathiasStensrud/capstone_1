@@ -10,7 +10,8 @@
   My initial EDA was promising, with close to half of LGBT students having drunk alcohol in the past 30 days, as compared to only 15% of their straight peers.
 
   ![](https://github.com/MathiasStensrud/capstone_1/blob/master/drinking.png)
-  I was forced to remove approximately 1/5 of my data, as imputing it would not make sense. This was due to the highly individualized answers, and the fact that they were categorical in nature, and therefore risky to change.
+ 
+ I was forced to remove approximately 1/5 of my data, as imputing it would not make sense. This was due to the highly individualized answers, and the fact that they were categorical in nature, and therefore risky to change.
   The four categories that students identified as were Straight, Bisexual, Gay/Lesbian(which I later separated further), and questioning. All of the groups apart from the straight students had over 40% of their population drinking at least 1-2 times in the previous 30 days, as well as more than 10% of Gay and Bi students drinking 3-5 times in the last 30 days.
 
 
