@@ -28,4 +28,5 @@ My data was pulled from the CDC YRBS, a survey given to middle- and high-schools
   In the future I would like to both look at the same survey from other years, as well as look at the combined YRBS dataset, which was not in a format I was able to properly read as opposed to the versions I used.
 #### References
 https://www.cdc.gov/healthyyouth/data/yrbs/data.htm
+
 https://www.lgbtdata.com/data.html
