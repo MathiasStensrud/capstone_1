@@ -1,6 +1,6 @@
 # Capstone 1 Mathias Stensrud
 ## Summary
-  My project was to analyze data from the CDC Youth Risk Behavior Survey, and look for differences between LGBT youth's underage drinking, and their non LGBT peers.
+  My project was to analyze data from the CDC Youth Risk Behavior Survey, and look for differences between LGBT and non LGBT youth drinking rates.
 
   My hypothesis was that LGBT youth would be at a greater risk for underage drinking or usage of drugs, potentially due to various social factors. I chose this due to my own observations in high school and college, and my involvement with various LGBT organizations.
 
