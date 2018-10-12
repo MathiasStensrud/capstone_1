@@ -19,7 +19,7 @@ My data was pulled from the CDC YRBS, a survey given to middle- and high-schools
 
 #### Model Training
   I chose to use a Logistic regression model for my data. This was technically a LogisticRegressionCV model with the binary conditions of having drank in the past 30 days or not. My features were age, sexuality, and gender. The logistic regression model managed to reach 70% accuracy based on these conditions alone, which could be raised an additional 3-5% by including data about cigarette smoking. This does seem to provide a correlation between sexuality and drinking, especially since accuracy only dropped by a few percent when gender and age were removed. Given the amount of accuracy that could be achieved with only a few conditions, I feel this is a good point to reach with this project.
-  ![](https://github.com/MathiasStensrud/capstone_1/blob/master/ROC.png)
+  ![](https://github.com/MathiasStensrud/capstone_1/blob/master/data/ROC.png)
 
 #### Results
   With an average accuracy score of 68% using only sexuality, age, and gender, as well as a r2 of .25, I can say that this is not the most accurate model in the world. However, this model does showcase a trend of underage drinking in LGBT youth. The fact that bisexual and questioning students had the highest drinking rates as compared to their straight peers is concerning but not unexpected. There have been multiple studies showcasing the fact that bisexual youth have some of the highest depression rates among LGBT youth, and underage substance usage is a not unknown condition of that. Adding answers surveying mental health from the survey increased accuracy to 73%, but this was only a quick check and not an in depth addition to the model.
