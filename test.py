@@ -67,37 +67,39 @@ def plot_roc(test_fact, true, model):
     plt.show()
     pass
 
-s=[]
-a=[]
-c=[]
-g=[]
-ag=[]
-w=[]
+sex=[]
+alc=[]
+cig=[]
+gen=[]
+age=[]
+wc=[]
 for i in range(len(df2['Students'])):
+    #a: 1 0 days where drunk alchohol per month, 2 1-2 days per month, 3 3-5 days
+    #4 6-9 5 10-19
     #loop assigning data to easily acessible variables. makes everything else a bit easier,
     temp=df2['Students'].loc[i][97]#sexuality
-    alc=df2['Students'].loc[i][73]#Alcohol usage in last month
-    cig=df2['Students'].loc[i][62]#igarette usage past month
-    age=df2['Students'].loc[i][16]#age
-    gen=df2['Students'].loc[i][17]#gender
+    Alc=df2['Students'].loc[i][73]#Alcohol usage in last month
+    Cig=df2['Students'].loc[i][62]#igarette usage past month
+    Age=df2['Students'].loc[i][16]#age
+    Gen=df2['Students'].loc[i][17]#gender
     wC=df2['Students'].loc[i][56]#wildcard, currently depression screener
-    if temp==' ' or gen==' ' or alc==' 'or age==' ': #essential components, cant be imputed
+    if temp==' ' or Gen==' ' or Alc==' 'or Age==' ': #essential components, cant be imputed
         df2.drop([i],inplace=True)
     else:
-        s.append(int(temp))
-        a.append(int(alc))
-        if cig==' ':#cvan be imputed, cigarette
-            c.append(0)
+        sex.append(int(temp))
+        alc.append(int(Alc))
+        if Cig==' ':#cvan be imputed, cigarette
+            cig.append(0)
         else:
-            c.append(int(cig))
-        g.append(int(gen))
-        ag.append(int(age))
+            cig.append(int(Cig))
+        gen.append(int(Gen))
+        age.append(int(Age))
         if wC==' ':#wildcard, can be imputed
-            w.append(0)
+            wc.append(0)
         else:
-            w.append(int(wC))
+            wc.append(int(wC))
 
-corrTest=pd.DataFrame({'Sexuality':s,'Alcohol Usage':a,'Smoking':c, 'Age':ag, 'Gender': g, 'Wilesbian_drinking_ratecard':w})
+corrTest=pd.DataFrame({'Sexuality':sex,'Alcohol Usage':age,'Smoking':cig, 'Age':age, 'Gender': gen, 'Wildcard':wc})
 
 #bad assignment variables
 
@@ -106,51 +108,26 @@ gay_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 straight_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 questioning_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
 lesbian_drinking_dict={1:0,2:0,3:0,4:0,5:0,6:0,7:0}
-bi_drinking_rate=[]#binary options, used in eda primarily, but still useful.
-gay_drinking_rate=[]
-straight_drinking_rate=[]
-lesbian_drinking_rate=[]
-questioning_drinking_rate=[]
-
+# ADVICE: get method dict comprehension list comprehension
 factors=[]#features
 y_vals=[]#these are my y values
 for i in range(len(s)):
     #worst loop in here
-    if a[i]>1:#(you been drinking kiddo?)
+    if alc[i]>1:#(you been drinking kiddo?)
         y_vals.append(1)#Yes
     else:
         y_vals.append(0)#no
-    if s[i]==2 and g[i]==2:#s==2 checks for answer (Gay/Lesbian) g==2 checks if male
-        gay_drinking_dict[a[i]]+=(1)#adds to dictionary containg values for each category
-        if a[i]>1:
-            gay_drinking_rate.append(1)
-        else:
-            gay_drinking_rate.append(0)
-    elif s[i]==2 and g[i]==1:#same as above but checks for female
-        lesbian_drinking_dict[a[i]]+=(1)
-        if a[i]>1:
-            lesbian_drinking_rate.append(1)
-        else:
-            lesbian_drinking_rate.append(0)
-    elif s[i]==1:#straight
-        straight_drinking_dict[a[i]]+=(1)
-        if a[i]>1:
-            straight_drinking_rate.append(1)
-        else:
-            straight_drinking_rate.append(0)
-    elif s[i]==3:#bisexual
-        bi_drinking_dict[a[i]]+=(1)
-        if a[i]>1:
-            bi_drinking_rate.append(1)
-        else:
-            bi_drinking_rate.append(0)
-    elif s[i]==4:#questioning/not sure
+    if sex[i]==2 and gen[i]==2:#s==2 checks for answer (Gay/Lesbian) g==2 checks if male
+        gay_drinking_dict[alc[i]]+=(1)#adds to dictionary containg values for each category
+    elif sex[i]==2 and gen[i]==1:#same as above but checks for female
+        lesbian_drinking_dict[alc[i]]+=(1)
+    elif sex[i]==1:#straight
+        straight_drinking_dict[alc[i]]+=(1)
+    elif sex[i]==3:#bisexual
+        bi_drinking_dict[alc[i]]+=(1)
+    elif sex[i]==4:#questioning/not sure
         questioning_drinking_dict[a[i]]+=(1)
-        if a[i]>1:
-            questioning_drinking_rate.append(1)
-        else:
-            questioning_drinking_rate.append(0)
-    factors.append([s[i],ag[i],g[i],w[i],c[i]]) #adds corresponfing features for student
+    factors.append([sex[i],age[i],gen[i],wc[i],cig[i]]) #adds corresponding features for student
 
 #percentages for pie chart labels
 pg=get_perc(gay_drinking_dict)
