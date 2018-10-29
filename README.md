@@ -1,4 +1,4 @@
-# Capstone 1 Mathias Stensrud
+# Drug and Alchohol use in LGBT Youth in America
 ## Summary
   My project was to analyze data from the CDC Youth Risk Behavior Survey, and look for differences between LGBT and non LGBT youth drinking rates.
 
